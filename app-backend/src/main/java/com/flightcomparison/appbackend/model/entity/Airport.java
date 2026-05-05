@@ -43,6 +43,11 @@ public class Airport {
         this.country = country;
     }
 
+    // Factory create method.
+    public static Airport create(String iataCode, String name, String city, String country) {
+        return new Airport(iataCode, name, city, country);
+    }
+
     // ---------- Getters and Setters ----------
     public Long getId() {
         return id;
