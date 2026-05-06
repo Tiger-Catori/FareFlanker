@@ -19,6 +19,12 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FlightResultDTO {
+
+    /**
+     * Represents a single flight option returned to the frontend.
+     * Used by FlightSearchController to send result to the UI.
+     */
+
     private final String airline;
     private final String flightNumber;
 
