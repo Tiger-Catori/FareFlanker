@@ -10,12 +10,6 @@ public class AppBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(AppBackendApplication.class, args);
 
-//        AirportSuggestionDTO dto = AirportSuggestionDTO.builder()
-//                .iataCode("CDG")
-//                .airportName("Charles de Gaulle Airport")
-//                .city("Paris")
-//                .country("France")
-//                .build();
     }
 
 }
