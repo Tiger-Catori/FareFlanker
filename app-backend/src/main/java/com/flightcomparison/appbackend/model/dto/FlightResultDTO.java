@@ -1,16 +1,14 @@
 package com.flightcomparison.appbackend.model.dto;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.flightcomparison.appbackend.model.enums.CabinClass;
 import com.flightcomparison.appbackend.model.enums.CurrencyType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Builder
 @Getter
@@ -20,23 +18,26 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FlightResultDTO {
 
-    /**
-     * Represents a single flight option returned to the frontend.
-     * Used by FlightSearchController to send result to the UI.
-     */
-
-    private final String airline;
+    private final String airlineName;
     private final String flightNumber;
+    private final String originIata;
+    private final String originAirportName;
+    private final String originCity;
+    private final String destinationIata;
+    private final String destinationAirportName;
+    private final String destinationCity;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private final ZonedDateTime departureTime;
 
-    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private final ZonedDateTime arrivalTime;
 
     @PositiveOrZero
     private final int durationMinutes;
+
+    @PositiveOrZero
+    private final int stops;
 
     @NotNull
     @PositiveOrZero
@@ -45,10 +46,6 @@ public class FlightResultDTO {
     @NotNull
     private final CurrencyType currency;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)     // omit empty list from JSON
-    private final List<String> amenities;
-
-    @PositiveOrZero
-    private final int stops;
-
+    @NotNull
+    private final CabinClass cabinClass;
 }

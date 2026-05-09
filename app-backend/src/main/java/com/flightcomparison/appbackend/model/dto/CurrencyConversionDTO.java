@@ -1,23 +1,31 @@
 package com.flightcomparison.appbackend.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.flightcomparison.appbackend.model.enums.CurrencyType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
-
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDate;
 
+@Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@ToString
-@EqualsAndHashCode
 public class CurrencyConversionDTO {
-    private final BigDecimal originalAmount;
-    private final CurrencyType originalCurrency;
-    private final BigDecimal convertedAmount;
-    private final CurrencyType targetCurrency;
-    private final BigDecimal exchangeRate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
-    private final Instant timestamp;
+
+    @NotNull(message = "Original currency is required")
+    private CurrencyType fromCurrency;
+
+    @NotNull(message = "Target currency is required")
+    private CurrencyType toCurrency;
+
+    @NotNull(message = "Amount is required")
+    @Positive(message = "Amount must be positive")
+    private BigDecimal amount;
+
+    private BigDecimal convertedAmount;   // populated in response
+
+    private BigDecimal exchangeRate;      // populated in response
+
+    private LocalDate rateDate;           // date of the exchange rate (response only)
 }

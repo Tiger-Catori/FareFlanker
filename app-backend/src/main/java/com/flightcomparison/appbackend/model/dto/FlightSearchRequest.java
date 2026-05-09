@@ -1,53 +1,61 @@
 package com.flightcomparison.appbackend.model.dto;
 
+import com.flightcomparison.appbackend.model.enums.CabinClass;
+import com.flightcomparison.appbackend.model.enums.CurrencyType;
 import com.flightcomparison.appbackend.model.enums.TripType;
 import jakarta.validation.constraints.*;
 import lombok.*;
-
 import java.time.LocalDate;
-import java.util.Objects;
+
+@Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@ToString
-@EqualsAndHashCode
+@AllArgsConstructor
 public class FlightSearchRequest {
-    /**
-     * Data Transfer Object:
-     * Carries the user's search input form the front end to the backend.
-     * Used by FlightSearchController & Validated before reaching the service.
-     * */
-    @NotBlank(message = "Origin cannot be blank.")
-    @Size(min = 3, max = 3)
-    private String originCode;
 
-    @NotBlank(message = "Destination cannot be blank.")
-    @Size(min = 3, max = 3)
-    private String destinationCode;
+    @NotBlank(message = "Origin IATA code is required")
+    @Size(min = 3, max = 3, message = "IATA code must be exactly 3 letters")
+    private String originIata;
 
-    @NotNull(message = "Departure date is required.")
-    @FutureOrPresent(message = "Departure date cannot be in the past.")
+    @NotBlank(message = "Destination IATA code is required")
+    @Size(min = 3, max = 3, message = "IATA code must be exactly 3 letters")
+    private String destinationIata;
+
+    @NotNull(message = "Departure date is required")
+    @FutureOrPresent(message = "Departure date cannot be in the past")
     private LocalDate departureDate;
 
-    @FutureOrPresent(message = "Return date cannot be in the past.")
-    private LocalDate returnDate; // optional for one-way trips
+    @FutureOrPresent(message = "Return date cannot be in the past")
+    private LocalDate returnDate;  // null for one‑way trips
 
-    public TripType getTripType() {
-        if (returnDate == null) return TripType.ONE_WAY;
-        else return TripType.ROUND_TRIP;
-    }
+    @NotNull(message = "Trip type is required")
+    private TripType tripType;
 
-    @AssertTrue(message = "Return date must be after the departure date.")
-    public boolean isReturnDateValid() {
-        if (returnDate == null) return true; // Allow for one-way trip
-        return departureDate != null && returnDate.isAfter(departureDate);
-    }
+    @NotNull(message = "Cabin class is required")
+    private CabinClass cabinClass;
 
-    @AssertTrue(message = "Origin & destination cannot be the same.")
+    @Min(value = 1, message = "At least 1 adult is required")
+    @Max(value = 9, message = "Maximum 9 adults allowed")
+    private Integer adults = 1;
+
+    // Replace the String currency field with:
+    @NotNull(message = "Currency code is required")
+    private CurrencyType currency = CurrencyType.GBP;
+
+    // Cross-field validation: origin and destination cannot be the same
+    @AssertTrue(message = "Origin and destination cannot be the same")
     public boolean isDifferentAirports() {
-        return !originCode.equalsIgnoreCase(destinationCode);
+        return originIata != null && destinationIata != null &&
+                !originIata.equalsIgnoreCase(destinationIata);
     }
 
-
+    // Cross-field validation: return date must be after departure date for round trips
+    @AssertTrue(message = "Return date must be after departure date for round trips")
+    public boolean isReturnDateValid() {
+        if (tripType == TripType.ROUND_TRIP) {
+            return returnDate != null && departureDate != null &&
+                    returnDate.isAfter(departureDate);
+        }
+        return true; // one‑way trips have no return date requirement
+    }
 }

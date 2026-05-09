@@ -3,17 +3,17 @@ package com.flightcomparison.appbackend.model.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+import java.util.Objects;
 
 @Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)   // <-- added
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ToString
 @EqualsAndHashCode(of = "iataCode")
 public class AirportSuggestionDTO {
+
     @NotBlank
     @Size(min = 3, max = 3)
     private final String iataCode;
