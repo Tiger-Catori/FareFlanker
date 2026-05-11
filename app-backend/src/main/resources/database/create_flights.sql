@@ -4,8 +4,8 @@ CREATE TABLE flights (
                          flight_number VARCHAR(10) NOT NULL,
                          origin_airport_id BIGINT NOT NULL,
                          destination_airport_id BIGINT NOT NULL,
-                         departure_time TIMESTAMP NOT NULL,
-                         arrival_time TIMESTAMP NOT NULL,
+                         departure_time TIME NOT NULL,
+                         arrival_time TIME NOT NULL,
                          duration_minutes INT NOT NULL,
                          stops INT NOT NULL,
 

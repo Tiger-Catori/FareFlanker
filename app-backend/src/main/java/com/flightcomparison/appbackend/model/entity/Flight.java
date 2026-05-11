@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "flights")
@@ -49,12 +49,12 @@ public class Flight {
     @NotNull(message = "Departure time is required")
     @Column(name = "departure_time", nullable = false)
     @ToString.Include
-    private LocalDateTime departureTime;
+    private LocalTime departureTime;
 
     @NotNull(message = "Arrival time is required")
     @Column(name = "arrival_time", nullable = false)
     @ToString.Include
-    private LocalDateTime arrivalTime;
+    private LocalTime arrivalTime;
 
     @Min(value = 1, message = "Duration must be at least 1 minute")
     @Column(name = "duration_minutes", nullable = false)
@@ -66,4 +66,5 @@ public class Flight {
     @Column(nullable = false)
     @ToString.Include
     private Integer stops;
+
 }

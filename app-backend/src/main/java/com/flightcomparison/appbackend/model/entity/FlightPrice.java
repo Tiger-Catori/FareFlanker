@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;  // <-- import this
 
 @Entity
 @Table(name = "flight_prices")
@@ -27,11 +28,6 @@ public class FlightPrice {
     @ToString.Include
     private Flight flight;
 
-    @NotBlank(message = "Provider is required")
-    @Column(nullable = false, length = 100)
-    @ToString.Include
-    private String provider;
-
     @NotNull(message = "Price in GBP is required")
     @Positive(message = "Price must be positive")
     @Column(name = "price_gbp", nullable = false, precision = 10, scale = 2)
@@ -52,14 +48,27 @@ public class FlightPrice {
     @ToString.Include
     private boolean refundable;
 
-    // Convenience constructor
-    public FlightPrice(Flight flight, String provider, BigDecimal priceGbp,
-                       CabinClass cabinClass, boolean baggageIncluded, boolean refundable) {
+    // NEW: Departure date (the specific date of travel)
+    @NotNull(message = "Departure date is required")
+    @Column(name = "departure_date", nullable = false)
+    @ToString.Include
+    private LocalDate departureDate;
+
+    // Constructor
+    public FlightPrice(Flight flight, BigDecimal priceGbp,
+                       CabinClass cabinClass, boolean baggageIncluded,
+                       boolean refundable, LocalDate departureDate) {
         this.flight = flight;
-        this.provider = provider;
         this.priceGbp = priceGbp;
         this.cabinClass = cabinClass;
         this.baggageIncluded = baggageIncluded;
         this.refundable = refundable;
+        this.departureDate = departureDate;
+    }
+
+    public static FlightPrice create(Flight flight, BigDecimal priceGbp,
+                                     CabinClass cabinClass, boolean baggageIncluded,
+                                     boolean refundable, LocalDate departureDate) {
+        return new FlightPrice(flight, priceGbp, cabinClass, baggageIncluded, refundable, departureDate);
     }
 }
