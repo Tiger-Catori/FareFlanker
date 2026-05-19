@@ -4,6 +4,7 @@ import com.flightcomparison.appbackend.exception.ApiCallException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
@@ -11,6 +12,8 @@ import org.springframework.web.client.RestClientException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
+import java.util.Map;
 
 @Component
 public class FrankfurterApiClient {
@@ -46,4 +49,22 @@ public class FrankfurterApiClient {
             throw new ApiCallException("Failed to fetch exchange rate from currency service", e);
         }
     }
+
+    public Set<String> getSupportedCurrencies() {
+        try {
+            var response = restClient.get()
+                    .uri("/currencies")
+                    .retrieve()
+                    .body(new ParameterizedTypeReference<Map<String, String>>() {});
+
+            if (response == null) {
+                throw new ApiCallException("Empty response from Frankfurter currencies endpoint");
+            }
+            return response.keySet();
+        } catch (RestClientException e) {
+            log.error("Failed to fetch supported currencies from Frankfurter API", e);
+            throw new ApiCallException("Failed to fetch supported currencies from currency service", e);
+        }
+    }
+
 }
