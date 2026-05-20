@@ -17,7 +17,7 @@ import java.util.*;
  */
 @Service
 @Transactional(readOnly = true)
-public class AirportServiceImpl {
+public class AirportServiceImpl implements AirportService {
 
     private final AirportRepository airportRepository;
 
