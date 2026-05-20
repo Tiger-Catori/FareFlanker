@@ -14,6 +14,5 @@ import java.util.Optional;
 public interface AirportService {
 
     List<AirportSuggestionDTO> suggestAirports(String query);
-
     Optional<Airport> getAirportByIataCode(String iataCode);
 }

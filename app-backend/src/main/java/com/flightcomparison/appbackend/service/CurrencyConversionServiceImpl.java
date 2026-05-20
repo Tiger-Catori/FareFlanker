@@ -41,7 +41,7 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
         }
 
         // 3. Get exchange rate (cached, may throw ApiCallException)
-        BigDecimal rate = getExchangeRate(fromCurrency, toCurrency);
+        BigDecimal rate = frankfurterApiClient.getExchangeRate(fromCurrency, toCurrency, null);
 
         // 4. Multiply and round to 2 decimal places (money standard)
         BigDecimal converted = amount.multiply(rate);

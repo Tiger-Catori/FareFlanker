@@ -2,6 +2,7 @@ package com.flightcomparison.appbackend.service;
 
 import com.flightcomparison.appbackend.model.dto.FlightResultDTO;
 import com.flightcomparison.appbackend.model.dto.FlightSearchRequest;
+import com.flightcomparison.appbackend.model.dto.RoundTripFlightResultDTO;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ import java.util.List;
 public interface FlightSearchService {
 
     List<FlightResultDTO> searchFlights(FlightSearchRequest request);
+    List<FlightResultDTO> searchOneWay(FlightSearchRequest request); // One way
+    List<RoundTripFlightResultDTO> searchRoundTrip(FlightSearchRequest request); // Round Trip
 }

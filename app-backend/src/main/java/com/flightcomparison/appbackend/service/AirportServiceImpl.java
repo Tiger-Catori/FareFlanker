@@ -29,6 +29,7 @@ public class AirportServiceImpl implements AirportService {
      * Returns autocomplete suggestions based on partial input i.e
      * (IATA code, city name, airport name).
      */
+    @Override
     public List<AirportSuggestionDTO> suggestAirports(String query) {
         // 1. Handle null query
         if (query == null) {
@@ -83,6 +84,7 @@ public class AirportServiceImpl implements AirportService {
         return suggestions;
     }
 
+    @Override
     public Optional<Airport> getAirportByIataCode(String iataCode) {
         if (iataCode == null || iataCode.isBlank()) {
             return Optional.empty();
