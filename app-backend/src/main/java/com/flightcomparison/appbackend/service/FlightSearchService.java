@@ -13,7 +13,6 @@ import java.util.List;
  * */
 public interface FlightSearchService {
 
-    List<FlightResultDTO> searchFlights(FlightSearchRequest request);
     List<FlightResultDTO> searchOneWay(FlightSearchRequest request); // One way
     List<RoundTripFlightResultDTO> searchRoundTrip(FlightSearchRequest request); // Round Trip
 }

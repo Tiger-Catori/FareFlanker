@@ -2,6 +2,7 @@ package com.flightcomparison.appbackend.service;
 
 import com.flightcomparison.appbackend.model.dto.FlightResultDTO;
 import com.flightcomparison.appbackend.model.dto.FlightSearchRequest;
+import com.flightcomparison.appbackend.model.dto.RoundTripFlightResultDTO;
 import com.flightcomparison.appbackend.model.entity.Flight;
 import com.flightcomparison.appbackend.model.entity.FlightPrice;
 import com.flightcomparison.appbackend.model.enums.CabinClass;
@@ -37,14 +38,6 @@ public class FlightSearchServiceImpl implements FlightSearchService {
         this.currencyConversionService = currencyConversionService;
     }
 
-//    @Override
-//    @Cacheable(value = "flightResults", key = "#request")
-//    public List<FlightResultDTO> searchFlights(FlightSearchRequest request) {
-//        // Delegate based on trip type
-//        if (request.getTripType() == TripType.ONE_WAY) {
-//            return;
-//        }
-//    }
 
     @Override
     public List<FlightResultDTO> searchOneWay(FlightSearchRequest request) {
@@ -122,6 +115,111 @@ public class FlightSearchServiceImpl implements FlightSearchService {
         // 5. Sort results (default: by price, but can be extended from request)
         // For now, sort by price ascending
         results.sort(Comparator.comparing(FlightResultDTO::getPrice));
+        return results;
+    }
+
+    @Override
+    public List<RoundTripFlightResultDTO> searchRoundTrip(FlightSearchRequest request) {
+        // Validating the TripType is a RoundTrip
+        if (request.getTripType() != TripType.ROUND_TRIP) {
+            throw new IllegalArgumentException("This method is only for round trip searches");
+        }
+
+        if (request.getReturnDate() == null || request.getReturnDate().isBefore(request.getDepartureDate())) {
+            throw new IllegalArgumentException("Invalid return date");
+        }
+
+        // 1. Find outbound flights & prices for departure date
+        List<Flight> outboundFlights = flightRepository.findByOriginIataCodeAndDestinationIataCode(
+                request.getOriginIata(), request.getDestinationIata());
+        if (outboundFlights.isEmpty()) return List.of();
+
+        List<FlightPrice> outboundPrices = flightPriceRepository.findByFlightInAndDepartureDate(
+                outboundFlights, request.getDepartureDate());
+        if (outboundPrices.isEmpty()) return List.of();
+
+        // 2. Filter outbound by cabin class
+        List<FlightPrice> filteredOutbound = outboundPrices.stream()
+                .filter(fp -> request.getCabinClass() == null || fp.getCabinClass() == request.getCabinClass())
+                .toList();
+
+        // 3. Build outbound DTOs
+        List<FlightResultDTO> outBoundLegs = buildFlightResultDTOs(filteredOutbound, String.valueOf(request.getCurrency()));
+
+        // 4. Find inbound flights & prices (swap origin/destination) for return date
+        List<Flight> inboundFlights = flightRepository.findByOriginIataCodeAndDestinationIataCode(
+                request.getDestinationIata(), request.getOriginIata());
+        if (inboundFlights.isEmpty()) return List.of();
+
+        List<FlightPrice> inboundPrices = flightPriceRepository.findByFlightInAndDepartureDate(
+                inboundFlights, request.getReturnDate());
+        if (inboundPrices.isEmpty()) return List.of();
+
+        List<FlightPrice> filteredInbound = inboundPrices.stream()
+                .filter(fp -> request.getCabinClass() == null || fp.getCabinClass() == request.getCabinClass())
+                .toList();
+
+        List<FlightResultDTO> inboundLegs = buildFlightResultDTOs(filteredInbound, String.valueOf(request.getCurrency()));
+
+        // 5. Pair each outbound with each inbound (Cartesian product)
+        List<RoundTripFlightResultDTO> roundTrips = new ArrayList<>();
+        for (FlightResultDTO out : outBoundLegs) {
+            for (FlightResultDTO in : inboundLegs) {
+                BigDecimal total = out.getPrice().add(in.getPrice());
+                int totalDuration = out.getDurationMinutes() + in.getDurationMinutes();
+                roundTrips.add(RoundTripFlightResultDTO.builder()
+                        .outboundLeg(out)
+                        .inboundLeg(in)
+                        .totalPrice(total)
+                        .totalDurationMinutes(totalDuration)
+                        .build());
+            }
+        }
+        // 6. Sort by total price (ascending)
+        roundTrips.sort(Comparator.comparing(RoundTripFlightResultDTO::getTotalPrice));
+        return roundTrips;
+    }
+
+    // Helper method to convert a list of FlightPrice + Flight into FlightResultDTO
+    private List<FlightResultDTO> buildFlightResultDTOs(List<FlightPrice> prices, String targetCurrency) {
+        List<FlightResultDTO> results = new ArrayList<>();
+        for (FlightPrice price : prices) {
+            Flight flight = price.getFlight();
+            ZonedDateTime departure = ZonedDateTime.of(
+                    LocalDateTime.of(price.getDepartureDate(), flight.getDepartureTime()),
+                    ZoneId.systemDefault());
+
+            ZonedDateTime arrival = ZonedDateTime.of(
+                    LocalDateTime.of(price.getDepartureDate(), flight.getArrivalTime()),
+                    ZoneId.systemDefault());
+
+            if (arrival.isBefore(departure)) {
+                arrival = arrival.plusDays(1);
+            }
+
+            BigDecimal convertedPrice = currencyConversionService.convert(
+                    price.getPriceGbp(), "GBP", targetCurrency
+            );
+
+            FlightResultDTO dto = FlightResultDTO.builder()
+                    .airlineName(flight.getAirline().getName())
+                    .flightNumber(flight.getFlightNumber())
+                    .originIata(flight.getOrigin().getIataCode())
+                    .originAirportName(flight.getOrigin().getName())
+                    .originCity(flight.getOrigin().getCity())
+                    .destinationIata(flight.getDestination().getIataCode())
+                    .destinationAirportName(flight.getDestination().getName())
+                    .destinationCity(flight.getDestination().getCity())
+                    .departureTime(departure)
+                    .arrivalTime(arrival)
+                    .durationMinutes(flight.getDurationMinutes())
+                    .stops(flight.getStops())
+                    .price(convertedPrice)
+                    .currency(CurrencyType.valueOf(targetCurrency))
+                    .cabinClass(price.getCabinClass())
+                    .build();
+            results.add(dto);
+        }
         return results;
     }
 }
