@@ -8,10 +8,7 @@ import com.flightcomparison.appbackend.service.CurrencyConversionService;
 import com.flightcomparison.appbackend.service.FlightSearchService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +32,19 @@ public class FlightSearchController {
             List<RoundTripFlightResultDTO> results = flightSearchService.searchRoundTrip(request);
             return ResponseEntity.ok(results);
         }
+    }
+
+    @GetMapping("/{flightId}")
+    public ResponseEntity<FlightResultDTO> getFlightById(@PathVariable Long flightId) {
+        // Note: This method would require a dedicated service method.
+        // For simplicity, we assume FlightSearchService has a findById method.
+        FlightResultDTO result = flightSearchService.findFlightById(flightId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("health")
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("Flight search service is operational");
     }
 
 }

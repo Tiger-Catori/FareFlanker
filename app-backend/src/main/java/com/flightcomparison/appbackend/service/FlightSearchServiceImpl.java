@@ -1,5 +1,6 @@
 package com.flightcomparison.appbackend.service;
 
+import com.flightcomparison.appbackend.exception.ResourceNotFoundException;
 import com.flightcomparison.appbackend.model.dto.FlightResultDTO;
 import com.flightcomparison.appbackend.model.dto.FlightSearchRequest;
 import com.flightcomparison.appbackend.model.dto.RoundTripFlightResultDTO;
@@ -10,7 +11,6 @@ import com.flightcomparison.appbackend.model.enums.CurrencyType;
 import com.flightcomparison.appbackend.model.enums.TripType;
 import com.flightcomparison.appbackend.repository.FlightPriceRepository;
 import com.flightcomparison.appbackend.repository.FlightRepository;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -221,5 +221,30 @@ public class FlightSearchServiceImpl implements FlightSearchService {
             results.add(dto);
         }
         return results;
+    }
+
+    @Override
+    public FlightResultDTO findFlightById(Long flightId) {
+        Flight flight = flightRepository.findById(flightId)
+                .orElseThrow(() -> new ResourceNotFoundException("Flight not found with id: " + flightId));
+
+        // Return basic flight information (no price/currency because no date is provided)
+        return FlightResultDTO.builder()
+                .airlineName(flight.getAirline().getName())
+                .flightNumber(flight.getFlightNumber())
+                .originIata(flight.getOrigin().getIataCode())
+                .originAirportName(flight.getOrigin().getName())
+                .originCity(flight.getOrigin().getCity())
+                .destinationIata(flight.getDestination().getIataCode())
+                .destinationAirportName(flight.getDestination().getName())
+                .destinationCity(flight.getDestination().getCity())
+                .departureTime(null)
+                .arrivalTime(null)
+                .durationMinutes(flight.getDurationMinutes())
+                .stops(flight.getStops())
+                .price(null)
+                .currency(null)
+                .cabinClass(null)
+                .build();
     }
 }
