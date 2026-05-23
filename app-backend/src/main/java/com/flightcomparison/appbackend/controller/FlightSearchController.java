@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("api/flights")
 public class FlightSearchController {
     private final FlightSearchService flightSearchService;
-    private final CurrencyConversionService currencyConversionService;
+    // private final CurrencyConversionService currencyConversionService;
 
     public FlightSearchController(FlightSearchService flightSearchService, CurrencyConversionService currencyConversionService) {
         this.flightSearchService = flightSearchService;
-        this.currencyConversionService = currencyConversionService;
+        // this.currencyConversionService = currencyConversionService;
     }
 
     @PostMapping("/search")
