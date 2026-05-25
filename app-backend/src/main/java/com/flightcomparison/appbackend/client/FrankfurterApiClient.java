@@ -5,7 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
@@ -64,6 +67,20 @@ public class FrankfurterApiClient {
         } catch (RestClientException e) {
             log.error("Failed to fetch supported currencies from Frankfurter API", e);
             throw new ApiCallException("Failed to fetch supported currencies from currency service", e);
+        }
+    }
+
+    // Checking health of FrankfurterApi
+    public boolean checkHealth() {
+        try {
+            restClient.get()
+                    .uri("/currencies")
+                    .retrieve()
+                    .toBodilessEntity();
+            return true;
+        } catch (RestClientException e) {
+            log.error("Frankfurter API health check failed", e);
+            return false;
         }
     }
 

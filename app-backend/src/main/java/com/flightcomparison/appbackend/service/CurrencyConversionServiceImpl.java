@@ -20,6 +20,11 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
     }
 
     @Override
+    public boolean isApiHealthy() {
+        return frankfurterApiClient.checkHealth();
+    }
+
+    @Override
     public BigDecimal convert(BigDecimal amount, String fromCurrency, String toCurrency) {
         // 1. Input validation
         if (amount == null) {

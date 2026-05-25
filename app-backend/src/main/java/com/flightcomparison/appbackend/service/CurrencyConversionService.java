@@ -7,4 +7,5 @@ public interface CurrencyConversionService {
     BigDecimal convert(BigDecimal amount, String fromCurrency, String toCurrency);
     BigDecimal getExchangeRate(String fromCurrency, String toCurrency);
     Set<String> getSupportedCurrencies();
+    boolean isApiHealthy();
 }
