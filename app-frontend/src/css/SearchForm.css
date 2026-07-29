@@ -1,3 +1,10 @@
+
+.card__container {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+}
+
 /* Form Structure */
 .search__box {
     display: flex;
