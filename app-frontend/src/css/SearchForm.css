@@ -1,0 +1,116 @@
+/* Form Structure */
+.search__box {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--clr-accent4);
+    border-radius: 12px;
+    padding: 3.2rem 4.8rem;
+    row-gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 100% ;
+    width: 100%;
+}
+
+.heading__box h2 {
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-h2);
+    text-transform: uppercase;
+}
+
+.airport-search__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    width: 70rem;
+    font-size: var(--fs-h3);
+}
+
+.input__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+.date-dropdown__row {
+    display: flex;
+    column-gap: 6rem;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.date__box,
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+    flex: 1;
+}
+
+
+/* Inputs */
+
+.input__box input,
+.date__input,
+.select__wrapper {
+    height: 5.4rem;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    background-color: var(--clr-white);
+    box-sizing: border-box;
+    font-size: var(--fs-body);
+    font-family: var(--ff-primary);
+}
+
+
+/* Input padding */
+.input__box input,
+.date__input {
+    padding: 0 2rem;
+}
+
+
+/* Focus states */
+.input__box input:focus,
+.date__input:focus,
+#passengers:focus {
+    outline: none;
+}
+
+
+/* Select Dropdown */
+
+.select__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+/* Hide default select arrow */
+#passengers {
+    width: 100%;
+    height: 100%;
+    padding: 0 5rem 0 2rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    appearance: none;
+    font-size: var(--fs-body);
+    font-family: var(--ff-primary);
+    cursor: pointer;
+}
+
+
+/* Custom dropdown icon */
+.select__wrapper ion-icon {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: #111;
+    pointer-events: none;
+}

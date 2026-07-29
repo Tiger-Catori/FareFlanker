@@ -1,0 +1,118 @@
+/* Index.css file */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@300;400;600;700,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Assistant:ital,wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Custom Properties */
+
+:root {
+    /* Font family defaults */
+    /*--ff-primary: "Assistant", sans-serif;*/
+    --ff-primary: "Montserrat", sans-serif;
+    --ff-secondary: "Montserrat", sans-serif;
+
+    /* Font weight defaults */
+    --fw-light: 300;
+    --fw-reg: 400;
+    --fw-semibold: 500;
+    --fw-bold: 600;
+    --fw-extrabold: 700;
+
+    /* Colors default */
+    /* Primary Brand */
+    --clr-primary: #6d28d9;
+    --clr-primary-dark: #5b21b6;
+    --clr-primary-light: #8b5cf6;
+
+    /* Accent Backgrounds */
+    --clr-accent: #faf8ff;
+    --clr-accent2: #6d28d9;
+    --clr-accent3: #ede9fe;
+    --clr-accent4: #ddd6fe;
+    --clr-accent5: #c4b5fd;
+    --clr-accent6: #a78bfa;
+
+    /* Dark Text */
+    --clr-heading: #2e1065;
+    --clr-text: #4c1d95;
+    --clr-text-light: #6b7280;
+
+    /* Neutrals */
+    --clr-white: #fff;
+    --clr-bg: #fcfbff;
+    --clr-border: #e9e5ff;
+    --clr-border-dark: #d8ccff;
+
+    /* Font Size */
+    --fs-title: 5rem;
+    --fs-h1: 3.6rem;
+    --fs-h2: 2.8rem;
+    --fs-h3: 2rem;
+    --fs-body: 1.75rem;
+    --fs-btn: 1.5rem;
+
+    --spacing-mb: 4.8rem;
+    --max-width: 80%;
+
+    /* States */
+    --clr-success: #10b981;
+    --clr-warning: #f59e0b;
+    --clr-danger: #ef4444;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(109, 40, 217, 0.08);
+    --shadow-md: 0 8px 24px rgba(109, 40, 217, 0.12);
+    --shadow-lg: 0 16px 40px rgba(109, 40, 217, 0.18);
+
+    /* Adjust font sizes for screens up to 1000px wide */
+    @media (max-width: 120rem) {
+        :root {
+            --fs-title: 4.5rem;
+            --fs-h1: 2.7rem; /* smaller than 3.6rem */
+            --fs-h2: 2rem; /* smaller than 2.4rem */
+            --fs-h3: 1.65rem; /* smaller than 2rem */
+            --fs-body: 1.4rem; /* smaller than 1.75rem */
+            --fs-btn: 1.2rem; /* smaller than 1.5rem */
+        }
+    }
+}
+
+html {
+    width: 100%;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    display:flex;
+    width: 100%;
+    font-size: var(--fs-body);
+    font-family: var(--ff-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-color: #fff;
+}
+
+#root {
+    margin:0 auto;
+    overflow-x: hidden;
+}
+
+
+.main__content {
+    display: flex;
+    justify-content: center; /* horizontal */
+    align-items: center;     /* vertical */
+    min-height: 100vh;
+    /* full viewport height */
+}
