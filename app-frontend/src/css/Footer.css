@@ -72,7 +72,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 1rem;
 }
 
@@ -88,7 +88,7 @@
     flex: 0 0 auto;
     /*margin: 0;
     padding: 0;*/
-    aspect-ratio: 16/9;
+
 }
 
 .logo-footer img {
@@ -249,7 +249,7 @@
     }
     .footer-center {
         flex-direction: row;
-        margin-top: 6rem;
+        /*margin-top: 6rem;*/
     }
     .logo-footer p {
         text-align: center;

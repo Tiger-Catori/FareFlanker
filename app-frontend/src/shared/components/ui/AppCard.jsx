@@ -1,4 +1,4 @@
-import AppButton from "./AppButton";
+import FormButton from "./FormButton";
 
 const AppCard = () => {
   return (
@@ -9,7 +9,7 @@ const AppCard = () => {
             <h2>Search for Flights</h2>
           </div>
           <FormInputs />
-          <AppButton href=''>Search Flights</AppButton >
+          <FormButton href=''>Search Flights</FormButton >
         </div>
       </div>
     </div>

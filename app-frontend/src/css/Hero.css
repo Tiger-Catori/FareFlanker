@@ -1,0 +1,218 @@
+/*
+   HERO SECTION STYLES - Hero.css
+ */
+
+.section__hero {
+    position: relative;
+    /*min-height: 80vh; */ /* Adjust this if you want the hero section to take more space */
+    min-height: 89.9vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    padding-top: 10rem;
+    opacity: 0.84;
+    margin-top: 0; /* Remove margin-top to align the hero section to the top */
+}
+
+/* Background image */
+.section__hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("src/assets/images/general/Hero-1.webp");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+/* Dark overlay for contrast */
+.section__hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /*background: rgba(15, 23, 42, 0.85);*/
+    background: rgba(0, 0, 0, 0.72);
+    z-index: 1;
+}
+
+/* Main hero layout container */
+.hero__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 150rem;
+    width: 100%;
+    position: relative;
+    margin-top: 0; /* Ensure no margin pushes the content down */
+    margin-bottom: 2rem;
+    z-index: 2;
+    gap: 4rem;
+}
+
+/* Text column */
+.hero__text {
+    flex: 1;
+    max-width: 650px;
+    padding-right: 2rem;
+    font-family: var(--ff-primary);
+}
+
+/* Hero heading (responsive) */
+.hero__head {
+    font-size: calc(3.2rem + 2vw); /* responsive font size */
+    font-weight: var(--fw-semibold);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--clr-accent4);
+}
+
+.hero__head span {
+    color: var(--clr-accent2);
+}
+
+/* Hero paragraph (responsive) */
+.hero__p {
+    font-size: calc(1.3rem + 0.8vw); /* responsive font size */
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    color: var(--clr-accent4);
+}
+
+/* Hero button (responsive) */
+.hero__btn {
+    padding: calc(1.2rem + 0.3vw) calc(2.2rem + 0.8vw);
+    border-radius: 8px;
+}
+
+.hero__btn a {
+    font-size: calc(1.2rem + 0.4vw);
+}
+
+/* Image column */
+.hero__image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 650px;
+}
+
+/* Hero image styling */
+.hero__img {
+    width: 100%;
+    height: auto;
+    /*max-height: 500px;*/
+    object-fit: cover;
+    border-radius: 0;
+    border-radius: 16px;
+    /*border-radius: 25%;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;*/
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 0 solid rgba(255, 255, 255, 0.1);
+    /*display: none;*/
+    visibility: hidden;
+    /*transform: scaleX(-1);*/
+}
+
+/* RATIO of Text to image in hero container */
+
+.hero__text {
+    flex: 0 0 70%;
+    max-width: 70%;
+}
+
+/*.hero__image {
+    flex: 0 0 30%;
+    max-width: 30%;
+}*/
+
+/* ================================
+   Responsive Layout - Tablets & Down
+   ================================ */
+@media (max-width: 1100px) {
+    /* Stack elements vertically (TEXT first, IMAGE second) */
+    .hero__container {
+        flex-direction: column !important;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 4.8rem;
+    }
+
+    /* TEXT section */
+    .hero__text {
+        order: 1; /* text ABOVE image */
+        padding-right: 0;
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+
+    /* IMAGE section */
+    .hero__image {
+        order: 2; /* image BELOW text */
+        justify-content: center;
+        max-width: 500px;
+        width: 100%;
+        display: none;
+    }
+
+    .hero__img {
+        max-height: 380px;
+    }
+
+    /* Center button on smaller screens */
+    .hero__btn {
+        margin: 0 auto;
+    }
+}
+
+/* ================================
+   Extra-small screens
+   ================================ */
+@media (max-width: 480px) {
+    .hero__image {
+        max-width: 280px;
+    }
+
+    .hero__img {
+        max-height: 320px;
+    }
+
+    .hero__head {
+        line-height: 1.3;
+    }
+}
+
+/* For medium mobile to tablet: ensure image is at least 500px wide */
+@media (min-width: 500px) and (max-width: 900px) {
+    .hero__image {
+        min-width: 500px;
+        max-width: 600px; /* optional: cap it */
+    }
+
+    .hero__img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* For very small screens (<500px), let it shrink naturally */
+@media (max-width: 499px) {
+    .hero__image {
+        min-width: auto;
+        max-width: 90vw; /* or 280px as you had */
+    }
+
+    .hero__img {
+        width: 100%;
+        max-height: 320px;
+    }
+}
