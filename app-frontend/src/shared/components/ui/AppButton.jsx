@@ -1,14 +1,15 @@
-import "../../../css/Button.css"
+import "../../../css/Button.css";
 
-const AppButton = ({ href, children, ...rest }) => {
+const AppButton = ({ href, children, className = "", ...rest }) => {
   return (
-    <>
-      <div className="hero__btn">
-        <a className="hero__btn-link" href={href} {...rest}>
-          {children}
-        </a>
-      </div>
-    </>
+    <a
+      href={href}
+      className={`btn btn--primary ${className}`}
+      {...rest}
+    >
+      {children}
+    </a>
   );
 };
+
 export default AppButton;
