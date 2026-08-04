@@ -2,11 +2,11 @@ import FormButton from "./FormButton";
 
 const AppCard = () => {
   return (
-    <div className="card__container">
+    <div className="card__container" id='search'>
       <div className="card">
         <div className="search__box">
           <div className="heading__box">
-            <h2>Search for Flights</h2>
+            <h2 className="heading">Search for Flights</h2>
           </div>
           <FormInputs />
           <FormButton href=''>Search Flights</FormButton >

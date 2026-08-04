@@ -91,7 +91,7 @@ body,
 #root {
     width: 100%;
     min-width: 100%;
-    margin: 0;
+    margin: 0 auto;
 }
 
 html {
@@ -179,4 +179,49 @@ html::-webkit-scrollbar-thumb:hover {
     overflow-x: hidden;
     background-color: var(--clr-accent4);
 
+}
+
+/* Full-bleed background section */
+.heading__box {
+    position: relative;
+    width: 100vw;
+    padding: 2rem 0;
+    margin-top: 1.2rem;
+    margin-bottom: 3.2rem;
+    z-index: 1;
+    color: var(--clr-white);
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    box-sizing: border-box;
+    filter: brightness(1.1);
+}
+
+.heading__box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        100deg,
+        var(--clr-accent2) 40%,
+        var(--clr-accent2) 60%
+    );
+    z-index: -1;
+}
+
+/* Constrain and center text content inside full-width banner */
+.heading__box > * {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.heading {
+    font-weight: var(--fw-semibold);
+    font-size: calc(2rem + 1vw);
+    text-transform: capitalize;
+    margin-top: 2.4rem;
+    margin-bottom: 1.2rem;
 }

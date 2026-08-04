@@ -27,7 +27,7 @@ const Footer = () => {
 
 const FooterLogo = () => {
   return (
-    <div className="footer-col logo-footer">
+    <div id='contact-details' className="footer-col logo-footer">
       <img src="src/assets/images/logos/Logo-icon.webp" alt="FareFlanker Logo" />
       <p>Every fare, one search</p>
       <ul className="footer__email">
@@ -63,18 +63,17 @@ const FooterLinks = () => {
 
   const links = [
     { name: "Home", hash: "home" },
-    { name: "How it works", hash: "how-it-works" },
-    { name: "About us", hash: "about" },
+    { name: "Search flights", hash: "search" },
     { name: "FAQs", hash: "faqs" },
-    { name: "Contact us", hash: "form-section" },
+    { name: "Contact us", hash: "contact-details" },
   ];
 
   return (
     <div
       className="footer-col col-one"
-      data-aos-delay="100"
-      data-aos="fade-right"
-      data-aos-duration="1000"
+      // data-aos-delay="100"
+      // data-aos="fade-right"
+      // data-aos-duration="1000"
     >
       <h4>Sitemap</h4>
       <ul className="footer-links site-map">
@@ -130,9 +129,9 @@ const FooterSocialLinks = () => {
   return (
     <div
       className="footer-col col-two"
-      data-aos-delay="100"
-      data-aos="fade-left"
-      data-aos-duration="1000"
+      // data-aos-delay="100"
+      // data-aos="fade-left"
+      // data-aos-duration="1000"
     >
       <h4>Follow me</h4>
       <ul className="footer-links social-links">

@@ -22,7 +22,7 @@ const HeroText = () => {
     <div className="hero__text">
       <h2 className="hero__head">Stop overpaying for flights</h2>
       <p className="hero__p">Discover the best fares before you book.</p>
-      <AppButton href="">Explore now!</AppButton>
+      <AppButton href="#search">Explore now!</AppButton>
     </div>
   )
 }
