@@ -1,0 +1,68 @@
+.not__found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    max-width: 130rem;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+}
+
+/* Style for the individual digits */
+.not__found h1 .digit {
+    font-size: calc(10rem + 3vw);
+    font-weight: bold;
+    color: var(--clr-accent5); /* Or whatever dark color you prefer */
+    /* Optional: Adjust letter spacing slightly if needed */
+    /* letter-spacing: -0.5em; */
+}
+
+.not__found h1 .digit:nth-child(2) {
+    color: var(--clr-accent5);
+}
+
+/* Special styling for the '0' to make it a circle with background image */
+.not__found h1 .zero-circle {
+    font-size: calc(9rem + 2vw);
+    font-weight: bold;
+    color: transparent; /* Make the text itself invisible */
+    background-image: url("./images/general/404.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Force the element to be a perfect circle */
+    width: 1em; /* Match the font size */
+    height: 1em;
+    border-radius: 50%; /* This makes it a circle */
+
+    /* Ensure the circle is centered vertically with the digits */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Optional: Add a slight margin to prevent touching the adjacent digits */
+    margin: 0 0.1em;
+}
+
+/* Keep the rest of your styles the same */
+.not__found p {
+    font-size: calc(1.4rem + 0.6vw);
+    /*font-weight: var(--fw-semibold);*/
+    margin-bottom: 2.2rem;
+}
+
+.path {
+    font-size: calc(1.6rem + 0.8vw);
+    /*font-weight: var(--fw-semibold);*/
+}
+
+@media (max-width: 1050px) {
+    .not__found {
+        margin-top: 6rem;
+        margin-bottom: 3rem;
+    }
+}

@@ -50,7 +50,7 @@
 }
 
 .faq__question:hover {
-    filter: brightness(1.15);
+    filter: brightness(1.2);
 }
 
 .faq__question.active {

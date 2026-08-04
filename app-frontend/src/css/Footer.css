@@ -1,27 +1,35 @@
 /* Footer */
+/* Footer */
 .footer {
     background-size: cover;
     background-repeat: no-repeat;
     padding: 2rem 0.6rem;
+    padding-bottom: 2rem; /* Ensure some bottom padding but no margin */
     color: var(--clr-white);
     text-decoration: none;
     position: relative;
     opacity: 0.99;
     font-family: var(--ff-primary);
     font-weight: var(--fw-semibold);
+    margin-top: auto; /* Pushes to bottom in flex container */
+    margin-bottom: 0; /* Remove bottom margin */
+    bottom: 0;
+    width: 100%; /* Full width of container */
 }
 
 .footer::after {
     content: "";
     position: absolute;
     bottom: 0;
-    left: -50%;
-    /*max-width: ;*/
-    width: 150vw;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw; /* Full viewport width */
     height: 100%;
     background-color: var(--clr-accent2);
     z-index: -1;
 }
+
+/* Rest of your footer styles remain the same... */
 
 .footer__container {
     display: flex;

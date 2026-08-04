@@ -1,0 +1,73 @@
+/* ErrorPage.css */
+.error-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
+    width: 100%;
+}
+
+.not-found-main {
+    flex: 1 0 auto; /* This pushes the footer down */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Update NotFound component */
+.not__found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 auto; /* Make it fill available space */
+    padding: 2rem;
+    box-sizing: border-box;
+    max-width: 130rem;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto; /* Changed from 'auto' to '0 auto' */
+}
+
+/* Keep your existing styles */
+.not__found h1 .digit {
+    font-size: calc(10rem + 3vw);
+    font-weight: bold;
+    color: var(--clr-accent2);
+}
+
+.not__found h1 .digit:nth-child(2) {
+    color: var(--clr-accent2);
+}
+
+.not__found h1 .zero-circle {
+    font-size: calc(9rem + 2vw);
+    font-weight: bold;
+    color: transparent;
+    background-image: url("./images/general/404.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.1em;
+}
+
+.not__found p {
+    font-size: calc(1.4rem + 0.6vw);
+    margin-bottom: 2.2rem;
+}
+
+.path {
+    font-size: calc(1.6rem + 0.8vw);
+}
+
+@media (max-width: 1050px) {
+    .not__found {
+        margin-top: 6rem;
+        margin-bottom: 3rem;
+    }
+}
