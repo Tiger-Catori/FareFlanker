@@ -31,7 +31,7 @@ const Intro = () => {
       </p>
       <p>
         By accessing this website we assume you accept these terms and
-        conditions. Do not continue to use FareFlanker.org if you do not
+        conditions. Do not continue to use FareFlanker.com if you do not
         agree to take all of the terms and conditions stated on this page.
       </p>
     </>
@@ -75,7 +75,7 @@ const CookiesSection = () => {
     <div>
       <h4>Cookies</h4>
       <p>
-        We employ the use of cookies. By accessing FareFlanker.org, you
+        We employ the use of cookies. By accessing FareFlanker.com, you
         agreed to use cookies in agreement with the FareFlanker Privacy
         Policy.
       </p>
@@ -96,17 +96,17 @@ const LicenseSection = () => {
       <h4>License</h4>
       <p>
         Unless otherwise stated, FareFlanker and/or its licensors own the
-        intellectual property rights for all material on FareFlanker.org. All
+        intellectual property rights for all material on FareFlanker.com. All
         intellectual property rights are reserved. You may access this from
-        FareFlanker.org for your own personal use subjected to restrictions
+        FareFlanker.com for your own personal use subjected to restrictions
         set in these terms and conditions.
       </p>
       <p>You must not:</p>
       <ul>
-        <li>Republish material from FareFlanker.org</li>
-        <li>Sell, rent or sub-license material from FareFlanker.org</li>
-        <li>Reproduce, duplicate or copy material from FareFlanker.org</li>
-        <li>Redistribute content from FareFlanker.org</li>
+        <li>Republish material from FareFlanker.com</li>
+        <li>Sell, rent or sub-license material from FareFlanker.com</li>
+        <li>Reproduce, duplicate or copy material from FareFlanker.com</li>
+        <li>Redistribute content from FareFlanker.com</li>
       </ul>
       <p>This Agreement shall begin on the date hereof.</p>
       <p>
