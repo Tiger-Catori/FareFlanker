@@ -155,6 +155,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .main__content {
     display: flex;
+    flex-direction: column;
     justify-content: center; /* horizontal */
     align-items: center;     /* vertical */
     min-height: 100vh;
