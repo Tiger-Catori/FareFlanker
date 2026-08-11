@@ -8,11 +8,6 @@
     padding: 0 2rem;
 }
 
-.card {
-    /*width: 100rem;*/
-}
-
-
 /* Form */
 .search__box {
     display: flex;
@@ -161,16 +156,19 @@
     pointer-events: none;
 }
 
-
 /* RESPONSIVE */
 
 @media (max-width: 900px) {
 
     .card__container {
+        width: 100%;
+        max-width: 100%;
         padding: 0 1.5rem;
     }
+
     .card {
-        width: 100rem;
+        width: 100%;
+        max-width: 100%;
     }
 
     .search__box {
@@ -185,6 +183,20 @@
         max-width: 100%;
 
         font-size: var(--fs-body);
+    }
+
+    .input__box {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .input__box input,
+    .date__input,
+    .select__wrapper {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
     }
 
     .date-dropdown__row {
@@ -203,34 +215,52 @@
         max-width: 100%;
 
         flex: none;
+        min-width: 0;
+    }
+
+    /* Make the form itself fill the available width */
+    .search__box form {
+        width: 100%;
+        max-width: 100%;
     }
 }
 
 
-/* Smaller phones */
+/* SMALL PHONES */
+
 @media (max-width: 500px) {
 
     .card__container {
+        width: 100%;
         padding: 0 1rem;
     }
 
+    .card {
+        width: 100%;
+        max-width: 100%;
+    }
+
     .search__box {
+        width: 100%;
+        max-width: 100%;
+
         padding: 2.5rem 1.5rem;
         border-radius: 10px;
     }
 
     .airport-search__box {
         width: 100%;
-    }
-
-    .input__box input,
-    .date__input,
-    .select__wrapper {
-        width: 100%;
         max-width: 100%;
     }
 
-    .date-dropdown__row {
+    .input__box,
+    .input__box input,
+    .date__input,
+    .select__wrapper,
+    .date-dropdown__row,
+    .date__box,
+    .dropdown {
         width: 100%;
+        max-width: 100%;
     }
 }
