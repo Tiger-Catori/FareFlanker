@@ -19,13 +19,19 @@ const Hero = () => {
 
 const HeroText = () => {
   return (
-    <div className="hero__text">
+    <div
+      className="hero__text"
+      data-aos-delay="100"
+      data-aos="fade-right"
+      data-aos-duration="1500">
       <h2 className="hero__head">Stop overpaying for flights</h2>
       <p className="hero__p">Discover the best fares before you book.</p>
       <AppButton href="#search">Explore now!</AppButton>
     </div>
   )
 }
+
+
 
 
 const HeroImage = () => {

@@ -25,7 +25,7 @@
     column-gap: 3.2rem;
     padding: 0 1.6rem;
     margin: 0 auto;
-    margin-top: 3.2rem; /* Space below .faq__text */
+    margin-top: 0rem; /* Space below .faq__text */
     margin-bottom: 3.2rem; /* Space below .faq__text */
 }
 

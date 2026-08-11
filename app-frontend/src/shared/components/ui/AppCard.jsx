@@ -6,7 +6,9 @@ const AppCard = () => {
       <div className="card">
         <div className="search__box">
           <div className="heading__box">
-            <h2 className="heading">Search for Flights</h2>
+            <h2 className="heading"
+              data-aos="fade-right"
+              data-aos-duration="1500">Search for Flights</h2>
           </div>
           <FormInputs />
           <FormButton href=''>Search Flights</FormButton >
