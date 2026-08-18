@@ -1,8 +1,9 @@
+// src/shared/components/ui/AppCard.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchFlights } from '../../lib/http/flightService';
 import FormButton from './FormButton';
-//import FlightCard from '../flight/FlightCard';
+import FlightCard from '../flight/FlightCard'; // uncommented
 
 const AppCard = () => {
   const navigate = useNavigate();
@@ -12,6 +13,10 @@ const AppCard = () => {
   const [destination, setDestination] = useState('');
   const [date, setDate] = useState('');
   const [passengers, setPassengers] = useState(1);
+  // Optional: add cabinClass and tripType if you add UI controls
+  // For now we'll use defaults
+  const cabinClass = 'ECONOMY';
+  const tripType = 'ONE_WAY';
 
   // Results state
   const [flights, setFlights] = useState([]);
@@ -23,17 +28,26 @@ const AppCard = () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await searchFlights(origin, destination, date, passengers);
-      setFlights(data); // assuming backend returns an array of flight objects
+      // The searchFlights function should send a POST with JSON body
+      const data = await searchFlights({
+        origin,
+        destination,
+        departureDate: date,
+        cabinClass,
+        passengers,
+        tripType,
+      });
+      setFlights(data);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to fetch flights. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleCardClick = (flightId) => {
-    navigate(`/flight/${flightId}`);
+    // Navigate to details page, passing the search date as query param
+    navigate(`/flight/${flightId}?date=${date}`);
   };
 
   return (
@@ -65,13 +79,18 @@ const AppCard = () => {
           {error && <div className="error-message">{error}</div>}
 
           <div className="results">
-            {flights.map((flight) => (
-              <FlightCard
-                key={flight.id}
-                flight={flight}
-                onClick={() => handleCardClick(flight.id)}
-              />
-            ))}
+            {loading && <p>Loading flights...</p>}
+            {!loading && flights.length === 0 && !error && (
+              <p>No flights found. Try adjusting your search.</p>
+            )}
+            {!loading &&
+              flights.map((flight) => (
+                <FlightCard
+                  key={flight.id || flight.flightNumber}
+                  flight={flight}
+                  onClick={() => handleCardClick(flight.id || flight.flightNumber)}
+                />
+              ))}
           </div>
         </div>
       </div>
@@ -81,8 +100,17 @@ const AppCard = () => {
 
 export default AppCard;
 
-// The FormInputs component
-const FormInputs = ({ origin, setOrigin, destination, setDestination, date, setDate, passengers, setPassengers }) => {
+// FormInputs Component
+const FormInputs = ({
+  origin,
+  setOrigin,
+  destination,
+  setDestination,
+  date,
+  setDate,
+  passengers,
+  setPassengers,
+}) => {
   return (
     <>
       <div className="airport-search__box">
@@ -93,9 +121,9 @@ const FormInputs = ({ origin, setOrigin, destination, setDestination, date, setD
             className="airport__input"
             id="from"
             name="originEntry"
-            placeholder="Enter origin"
+            placeholder="Enter origin (e.g., JFK)"
             value={origin}
-            onChange={(e) => setOrigin(e.target.value)}
+            onChange={(e) => setOrigin(e.target.value.toUpperCase())}
             required
           />
         </div>
@@ -107,9 +135,9 @@ const FormInputs = ({ origin, setOrigin, destination, setDestination, date, setD
             className="airport__input"
             id="to"
             name="destinationEntry"
-            placeholder="Enter destination"
+            placeholder="Enter destination (e.g., LAX)"
             value={destination}
-            onChange={(e) => setDestination(e.target.value)}
+            onChange={(e) => setDestination(e.target.value.toUpperCase())}
             required
           />
         </div>
@@ -136,8 +164,10 @@ const FormInputs = ({ origin, setOrigin, destination, setDestination, date, setD
                 value={passengers}
                 onChange={(e) => setPassengers(Number(e.target.value))}
               >
-                {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
-                  <option key={num} value={num}>{num}</option>
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                  <option key={num} value={num}>
+                    {num}
+                  </option>
                 ))}
               </select>
               <ion-icon name="chevron-down-outline"></ion-icon>
