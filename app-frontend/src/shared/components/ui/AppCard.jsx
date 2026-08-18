@@ -78,20 +78,13 @@ const AppCard = () => {
 
           {error && <div className="error-message">{error}</div>}
 
-          <div className="results">
-            {loading && <p>Loading flights...</p>}
-            {!loading && flights.length === 0 && !error && (
-              <p>No flights found. Try adjusting your search.</p>
-            )}
-            {!loading &&
-              flights.map((flight) => (
-                <FlightCard
-                  key={flight.id || flight.flightNumber}
-                  flight={flight}
-                  onClick={() => handleCardClick(flight.id || flight.flightNumber)}
-                />
-              ))}
-          </div>
+          <Results
+            flights={flights}
+            loading={loading}
+            error={error}
+            onCardClick={handleCardClick}
+          />
+
         </div>
       </div>
     </div>
@@ -99,6 +92,26 @@ const AppCard = () => {
 };
 
 export default AppCard;
+
+// Results Component
+const Results = ({ flights, loading, error, onCardClick }) => {
+  return (
+    <div className="results">
+      {loading && <p>Loading flights...</p>}
+      {!loading && flights.length === 0 && !error && (
+        <p>No flights found. Try adjusting your search.</p>
+      )}
+      {!loading &&
+        flights.map((flight) => (
+          <FlightCard
+            key={flight.id || flight.flightNumber}
+            flight={flight}
+            onClick={() => onCardClick(flight.id || flight.flightNumber)}
+          />
+        ))}
+    </div>
+  );
+};
 
 // FormInputs Component
 const FormInputs = ({

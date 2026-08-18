@@ -46,36 +46,50 @@ const FlightDetailsPage = () => {
     return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
   };
 
+  return (
+    <>
+      <div className='flight-details'>
+        <h2>Flight Details</h2>
+
+        <div className='details-card'>
+          <Price flight={flight}/>
+          <Airline flight={flight}/>
+          <FlightInfo flight={flight}/>
+        </div>
+      </div>
+    </>
+  )
+
 }
 export default FlightDetailsPage;
 
 // Breaking up details into componments
 
-const Price = () => {
+const Price = ({flight}) => {
   return (
     <>
       <div className='price'>
         <h4>Total Price</h4>
-        <h4>${flight.price} per passenger</h4>
+        <h4>{flight.currency}{flight.price} per passenger</h4>
       </div>
     </>
   )
 }
 
-const Airline = () => {
+const Airline = ({flight}) => {
   return (
     <>
       <div className="airline-info">
         <h3>{flight.airline}</h3>
         <div className="times">
           <div>
-            <strong>{flight.departureTime}</strong> {flight.origin}
-            <div>{flight.departureDate}</div>
+            <strong>{formatTime(flight.departureTime)}</strong> {flight.origin}
+            <div>{formatDate(flight.departureDate)}</div>
           </div>
           <div>🛫 Travel time: {formatDuration(flight.durationMinutes)}</div>
           <div>
-            <strong>{flight.arrivalTime}</strong> {flight.destination}
-            <div>{flight.arrivalDate}</div>
+            <strong>{formatTime(flight.arrivalTime)}</strong> {flight.destination}
+            <div>{formatDate(flight.arrivalDate)}</div>
           </div>
         </div>
         {flight.stops > 0 && (
@@ -98,7 +112,7 @@ const Airline = () => {
 //   )
 // }
 
-const FlightInfo = () => {
+const FlightInfo = ({flight}) => {
   return (
     <>
       <div className="flight-info">
