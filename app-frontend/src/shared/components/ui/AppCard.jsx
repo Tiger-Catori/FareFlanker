@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchFlights } from '../../lib/http/flightService';
 import FormButton from './FormButton';
-import FlightCard from '../flight/FlightCard'; // uncommented
+import FlightCard from '../flight/FlightCard';
 
 const AppCard = () => {
   const navigate = useNavigate();
