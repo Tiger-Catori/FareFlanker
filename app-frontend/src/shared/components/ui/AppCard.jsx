@@ -26,6 +26,7 @@ const AppCard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log('Form submitted!');
     setError(null);
     try {
       // The searchFlights function should send a POST with JSON body
