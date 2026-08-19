@@ -15,5 +15,5 @@ public interface FlightSearchService {
 
     List<FlightResultDTO> searchOneWay(FlightSearchRequest request); // One way
     List<RoundTripFlightResultDTO> searchRoundTrip(FlightSearchRequest request); // Round Trip
-    FlightResultDTO findFlightById(Long flightId);
+    FlightResultDTO findFlightById(Long flightId, String date);
 }

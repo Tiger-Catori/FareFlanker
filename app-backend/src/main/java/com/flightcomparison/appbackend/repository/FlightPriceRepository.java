@@ -1,5 +1,6 @@
 package com.flightcomparison.appbackend.repository;
 
+import com.flightcomparison.appbackend.model.entity.Flight;
 import com.flightcomparison.appbackend.model.enums.CabinClass;
 import com.flightcomparison.appbackend.model.entity.FlightPrice;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface FlightPriceRepository extends JpaRepository<FlightPrice, Long> {
 
@@ -50,4 +52,8 @@ public interface FlightPriceRepository extends JpaRepository<FlightPrice, Long> 
                                                @Param("cabinClass") CabinClass cabinClass,
                                                @Param("sortBy") String sortBy,
                                                Pageable pageable);
+
+    Optional<FlightPrice> findByFlightAndDepartureDate(Flight flight, LocalDate departureDate);
+
+
 }

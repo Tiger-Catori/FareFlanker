@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -32,7 +33,7 @@ public class FlightSearchServiceImpl implements FlightSearchService {
     private final FlightPriceRepository flightPriceRepository;
     private final CurrencyConversionService currencyConversionService;
 
-    public FlightSearchServiceImpl (FlightRepository flightRepository, FlightPriceRepository flightPriceRepository, CurrencyConversionService currencyConversionService) {
+    public FlightSearchServiceImpl(FlightRepository flightRepository, FlightPriceRepository flightPriceRepository, CurrencyConversionService currencyConversionService) {
         this.flightRepository = flightRepository;
         this.flightPriceRepository = flightPriceRepository;
         this.currencyConversionService = currencyConversionService;
@@ -224,11 +225,35 @@ public class FlightSearchServiceImpl implements FlightSearchService {
     }
 
     @Override
-    public FlightResultDTO findFlightById(Long flightId) {
+    public FlightResultDTO findFlightById(Long flightId, String date) {
         Flight flight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new ResourceNotFoundException("Flight not found with id: " + flightId));
 
-        // Return basic flight information (no price/currency because no date is provided)
+        // Parse the date string to LocalDate
+        LocalDate departureDate = LocalDate.parse(date);
+
+        // Find the price for this flight and date
+        FlightPrice price = flightPriceRepository.findByFlightAndDepartureDate(flight, departureDate)
+                .orElseThrow(() -> new ResourceNotFoundException("No price found for flight " + flightId + " on date " + date));
+
+        // Build ZonedDateTime using the flight's departure/arrival times and the price's date
+        ZonedDateTime departureTime = ZonedDateTime.of(
+                LocalDateTime.of(departureDate, flight.getDepartureTime()),
+                ZoneId.systemDefault()
+        );
+        ZonedDateTime arrivalTime = ZonedDateTime.of(
+                LocalDateTime.of(departureDate, flight.getArrivalTime()),
+                ZoneId.systemDefault()
+        );
+        if (arrivalTime.isBefore(departureTime)) {
+            arrivalTime = arrivalTime.plusDays(1);
+        }
+
+        // Optionally convert currency if needed (default to GBP or use a request param)
+        BigDecimal convertedPrice = currencyConversionService.convert(
+                price.getPriceGbp(), "GBP", "GBP" // or let frontend pass currency
+        );
+
         return FlightResultDTO.builder()
                 .airlineName(flight.getAirline().getName())
                 .flightNumber(flight.getFlightNumber())
@@ -238,13 +263,38 @@ public class FlightSearchServiceImpl implements FlightSearchService {
                 .destinationIata(flight.getDestination().getIataCode())
                 .destinationAirportName(flight.getDestination().getName())
                 .destinationCity(flight.getDestination().getCity())
-                .departureTime(null)
-                .arrivalTime(null)
+                .departureTime(departureTime)
+                .arrivalTime(arrivalTime)
                 .durationMinutes(flight.getDurationMinutes())
                 .stops(flight.getStops())
-                .price(null)
-                .currency(null)
-                .cabinClass(null)
+                .price(convertedPrice)
+                .currency(CurrencyType.GBP) // or from request
+                .cabinClass(price.getCabinClass())
                 .build();
     }
 }
+//    @Override
+//    public FlightResultDTO findFlightById(Long flightId) {
+//        Flight flight = flightRepository.findById(flightId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Flight not found with id: " + flightId));
+//
+//        // Return basic flight information (no price/currency because no date is provided)
+//        return FlightResultDTO.builder()
+//                .airlineName(flight.getAirline().getName())
+//                .flightNumber(flight.getFlightNumber())
+//                .originIata(flight.getOrigin().getIataCode())
+//                .originAirportName(flight.getOrigin().getName())
+//                .originCity(flight.getOrigin().getCity())
+//                .destinationIata(flight.getDestination().getIataCode())
+//                .destinationAirportName(flight.getDestination().getName())
+//                .destinationCity(flight.getDestination().getCity())
+//                .departureTime(null)
+//                .arrivalTime(null)
+//                .durationMinutes(flight.getDurationMinutes())
+//                .stops(flight.getStops())
+//                .price(null)
+//                .currency(null)
+//                .cabinClass(null)
+//                .build();
+//    }
+//}

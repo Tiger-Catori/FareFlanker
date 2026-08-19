@@ -35,10 +35,10 @@ public class FlightSearchController {
     }
 
     @GetMapping("/{flightId}")
-    public ResponseEntity<FlightResultDTO> getFlightById(@PathVariable Long flightId) {
+    public ResponseEntity<FlightResultDTO> getFlightById(@PathVariable Long flightId, @RequestParam String date) {
         // Note: This method would require a dedicated service method.
         // For simplicity, we assume FlightSearchService has a findById method.
-        FlightResultDTO result = flightSearchService.findFlightById(flightId);
+        FlightResultDTO result = flightSearchService.findFlightById(flightId, date);
         return ResponseEntity.ok(result);
     }
 
