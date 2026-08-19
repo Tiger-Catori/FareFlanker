@@ -22,7 +22,7 @@ export const searchFlights = async (searchParams) => {
  * @returns {Promise<Object>} Transformed flight detail object.
  */
 export const getFlightDetails = async (flightId, date) => {
-  const data = await apiFetch(`/api/flight/${flightId}?date=${date}`, {
+  const data = await apiFetch(`/api/flights/${flightId}?date=${date}`, {
     method: 'GET'
   });
   // data is a single FlightResultDTO object

@@ -30,8 +30,8 @@ const AppCard = () => {
     try {
       // The searchFlights function should send a POST with JSON body
       const data = await searchFlights({
-        origin,
-        destination,
+        originIata: origin,
+        destinationIata: destination,
         departureDate: date,
         cabinClass,
         passengers,
