@@ -6,11 +6,11 @@ import "../css/Footer.css";
 
 const ResultPage = () => {
   return (
-    <>
+    <div className="result-page">
       <NavbarComponent />
       <SearchResults />
       <FooterComponent />
-    </>
+    </div>
   );
 };
 

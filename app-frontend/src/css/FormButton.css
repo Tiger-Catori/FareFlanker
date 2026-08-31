@@ -8,26 +8,28 @@
     /*overflow-x: none;*/
     background-color: var(--clr-accent2);
     font-family: var(--ff-primary);
-    /*border: 2px solid var(--clr-accent2);*/
+    border: 2px solid var(--clr-accent2);
     padding:1.2rem 2.4rem;
     border-radius: 6px;
     width: 100%;
     align-items: center;
     justify-content: center;
-}
-
-/* Search Flights Button */
-.btn__link a {
-    font-size: var(--fs-body);
     color: var(--clr-white);
-    text-decoration: none;
+    font-size: var(--fs-body);
     text-transform: uppercase;
     font-weight: var(--fw-semibold);
 }
 
-.btn__link:hover a {
-    text-decoration: underline;
+/* Search Flights Button */
+/*.btn__link a {
+    font-size: var(--fs-body);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: var(--fw-semibold);
+}*/
 
+.btn__link:hover  {
+    text-decoration: underline;
 }
 
 .btn__link:hover {

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { searchFlights } from "../lib/http/flightService";
-import FlightCard from "./flight/FlightCard"; // adjust path if needed
+import FlightCard from "./flight/FlightCard";
+import "../../css/SearchResults.css";
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
