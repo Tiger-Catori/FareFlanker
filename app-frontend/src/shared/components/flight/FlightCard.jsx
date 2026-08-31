@@ -1,4 +1,21 @@
 import PropTypes from 'prop-types';
+import "../../../css/FlightCard.css";
+
+// Helper function: format ISO string or date to readable time (e.g., "Aug 17, 2026, 08:00 AM")
+const formatDateTime = (dateInput) => {
+  if (!dateInput) return '';
+  const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+  if (isNaN(date)) return '';
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "UTC",
+  })
+}
 
 const FlightCard = ({ flight, onClick }) => {
   const {
@@ -21,8 +38,10 @@ const FlightCard = ({ flight, onClick }) => {
         <Airline airline={airline} />
         <Times departureTime={departureTime} arrivalTime={arrivalTime} />
         <FlightRoute origin={origin} duration={duration} destination={destination} />
-        <Stops isDirect={isDirect} stops={stops} />
-        <Prices formattedPrice={formattedPrice} />
+        <div className='stops__price'>
+          <Stops isDirect={isDirect} stops={stops} />
+          <Prices formattedPrice={formattedPrice} />
+        </div>
       </div>
     </>
   )
@@ -44,26 +63,28 @@ const Airline = ({airline}) => {
   )
 }
 
-const Times = ({ arrivalTime, departureTime }) => {
+const Times = ({ departureTime, arrivalTime }) => {
+  const formattedDeparture = formatDateTime(departureTime);
+  const formattedArrival = formatDateTime(arrivalTime);
   return (
-    <>
-      <div className='flight-card__times'>
-        <span>{departureTime}</span> → <span>{arrivalTime}</span>
-      </div>
-    </>
-  )
-}
+    <div className='flight-card__times'>
+      <span>{formattedDeparture}</span> → <span>{formattedArrival}</span>
+    </div>
+  );
+};
 
 
-const FlightRoute = ({origin, duration, destination}) => {
+const FlightRoute = ({ origin, duration, destination }) => {
   return (
-    <>
-      <div className='flight-card__route'>
-                {origin} → {duration} → {destination}
-      </div>
-    </>
-  )
-}
+    <div className="flight-card__route">
+      <span className="origin">{origin}</span>
+      <span className="arrow">→</span>
+      <span className="duration">{duration} mins</span>
+      <span className="arrow">→</span>
+      <span className="destination">{destination}</span>
+    </div>
+  );
+};
 
 const Stops = ({ isDirect, stops }) => {
   return (

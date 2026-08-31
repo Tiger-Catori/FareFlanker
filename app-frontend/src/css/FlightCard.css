@@ -1,0 +1,106 @@
+/* FlightCard.css */
+
+.flight-card {
+  display: flex;
+  flex-direction: column;
+
+  padding: calc(0.8rem + 1vw) calc(0.8rem + 1.5vw);
+
+  margin-top: calc(0.8rem + 0.5vw);
+
+  background-color: var(--clr-white);
+  border-radius: 16px;
+  border-left: 5px solid var(--clr-danger);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+  font-size: calc(0.75rem + 0.3vw);
+
+  row-gap: calc(0.6rem + 0.5vw);
+
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+
+  max-width: 150rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.flight-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+}
+
+/* Airline */
+.flight-card__airline {
+  font-weight: var(--fw-bold);
+  font-size: calc(1rem + 0.35vw);
+  color: #1a1a1a;
+  margin-bottom: 0.2rem;
+}
+
+
+/* Times */
+.flight-card__times {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 3.2rem;
+
+  font-weight: var(--fw-semibold);
+  font-size: calc(1rem + 0.35vw);
+
+  color: #222;
+}
+
+.flight-card__times span {
+  display: inline-block;
+}
+
+
+/* Route */
+.flight-card__route {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+
+  font-size: calc(0.9rem + 0.3vw);
+
+  color: #111;
+}
+
+.flight-card__route .origin,
+.flight-card__route .destination {
+  font-weight: var(--fw-semibold);
+}
+
+.flight-card__route .duration {
+  font-weight: var(--fw-semibold);
+}
+
+
+/* Stops */
+.flight-card__stops {
+  font-weight: var(--fw-bold);
+  font-size: calc(0.85rem + 0.3vw);
+  color: #777;
+  margin-top: 0.2rem;
+}
+
+
+/* Price */
+.flight-card__price {
+  font-weight: var(--fw-bold);
+  font-size: calc(0.85rem + 0.3vw);
+  color: #007bff;
+  margin-top: 0.2rem;
+  align-self: flex-start;
+}
+
+.stops__price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

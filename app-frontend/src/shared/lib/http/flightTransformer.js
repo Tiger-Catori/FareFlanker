@@ -8,7 +8,7 @@ export const transformFlight = (dto) => ({
   destinationCity: dto.destinationCity,
   departureTime: dto.departureTime, // keep as ISO string
   arrivalTime: dto.arrivalTime,
-  durationMinutes: dto.durationMinutes,
+  duration: dto.durationMinutes,
   stops: dto.stops,
   price: dto.price,
   currency: dto.currency,
